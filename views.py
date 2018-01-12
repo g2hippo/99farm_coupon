@@ -6,7 +6,8 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.shortcuts import render,redirect
 from django.utils import timezone
 from .models import Ticket
-import datetime
+import datetime, json
+
 
 def check(sn,pwd):
     
@@ -49,18 +50,25 @@ def verify(request):
             msg = "网络错误"
         else:
             verified,msg = check(sn,pwd)
-           
-    if verified:
-        return render(request,'coupon/order.html',{
-            'sn':sn,
-            'pwd':pwd,
-            'good':msg
-            })
-    else:
-        return render(request,'coupon/verify.html',{
-            'sn':sn,
-            'error_message':msg
-            })
+    if request.is_ajax():
+        return HttpResponse(json.dumps({
+            'verified':verified,
+            'msg':msg
+            }
+                                       )
+                            )
+    else:                   
+        if verified:        
+            return render(request,'coupon/order.html',{
+                'sn':sn,
+                'pwd':pwd,
+                'good':msg
+                })
+        else:
+            return render(request,'coupon/verify.html',{
+                'sn':sn,
+                'error_message':msg
+                })
 
 def order(request):
     
@@ -89,14 +97,30 @@ def order(request):
                 msg = sn + "成功提交订单"
             except:
                 msg = "提交订单失败"
-            return render(request,'coupon/verify.html',{
-                'error_message':msg
-                })
+            if request.is_ajax():
+                return HttpResponse(json.dumps({
+                    'verified':verified,
+                    'msg':msg
+                    }
+                                               )
+                                    )
+            else:
+                return render(request,'coupon/verify.html',{
+                    'error_message':msg
+                    })
+        elif request.is_ajax():
+            return HttpResponse(json.dumps({
+                'verified':verified,
+                'msg':msg
+                }
+                                           )
+                                )
         else:
             return render(request,'coupon/verify.html',{
                 'sn':sn,
                 'error_message':msg
-                })
+                }
+                          )
             
                 
             
