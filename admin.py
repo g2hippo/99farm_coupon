@@ -24,8 +24,8 @@ class TiecketResource(resources.ModelResource):
         model = Ticket
         import_id_fields = ('sn',)
         skip_unchanged = False
-        fields = ('batch', 'sn', 'date_expire', 'product', 'order_name', 'order_phone', 'order_address', 'order_comments')
-        export_order = ('batch', 'sn', 'product', 'order_name', 'order_phone', 'order_address', 'order_comments')
+        fields = ('batch', 'sn', 'pwd', 'date_expire', 'product', 'order_name', 'order_phone', 'order_address', 'order_comments')
+        export_order = ('batch', 'sn', 'pwd', 'product', 'order_name', 'order_phone', 'order_address', 'order_comments')
     
 class TicketAdmin(ImportExportActionModelAdmin):
     resource_class = TiecketResource
@@ -40,7 +40,8 @@ class TicketAdmin(ImportExportActionModelAdmin):
         )
         
     list_filter = ['batch', 'actived', 'order_completed', 'date_creat']
-    list_display = ['sn','batch','actived','date_use','order_name']
+    list_display = ['batch', 'sn', 'actived', 'date_use', 'order_name']
+	list_display_links = ['sn', 'order_name']
     actions = [active_tickets, deactive_tickets, complete_order]
     date_hierarchy = 'date_creat'
     
