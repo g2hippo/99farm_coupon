@@ -26,7 +26,7 @@ def check(sn,pwd):
         elif ticket.date_expire < datetime.date.today():
             msg = "此券已经失效，有效期至" + ticket.date_expire.isoformat()
         elif ticket.date_use != None:
-            msg = "此券已于 " + timezone.make_naive(ticket.date_use).isoformat(' ') + " 使用"
+            msg = "此券已于 " + timezone.make_naive(ticket.date_use).strftime('%Y-%m-%d %H:%M:%S') + " 使用"
         else:
             verified = True
             msg = ticket.get_product_display()
