@@ -41,7 +41,7 @@ class TicketAdmin(ImportExportActionModelAdmin):
         
     list_filter = ['batch', 'actived', 'order_completed', 'date_creat']
     list_display = ['batch', 'sn', 'actived', 'date_use', 'order_name']
-	list_display_links = ['sn', 'order_name']
+    list_display_links = ['sn', 'order_name']
     actions = [active_tickets, deactive_tickets, complete_order]
     date_hierarchy = 'date_creat'
     
