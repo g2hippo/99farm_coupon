@@ -11,7 +11,6 @@
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<link rel="stylesheet" type="text/css" href="{% static 'coupon/style.css' %}" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -24,16 +23,26 @@
   <body>
  
    <div class="container">
-
       <form class="form-signin" action="{% url 'coupon:verify'%}" method="post">
-	   <p class="form-signin-heading">{% if error_message %}{{ error_message }}{% else %} 请验证礼券 {% endif %}</h2>
+	   {% if error_message %}
+       <div class="alert alert-danger" role="alert">{{ error_message }}</div>
+       {% else %}
+       <div class="alert alert-info" role="alert">请验证礼券</div>
+       {% endif %}
 	  {% csrf_token %}
         <label for="inputsn" class="sr-only">券号</label>
         <input type="number" id="inputsn" class="form-control" name="sn" placeholder="券号" value="{{ sn }}" maxlength=8 required {% if not sn %}autofocus{% endif %}>
         <label for="inputPassword" class="sr-only">密码</label>
         <input type="password" id="inputPassword" class="form-control" name="pwd"  placeholder="密码" required {% if sn %}autofocus{% endif %}>        
-        <button class="btn btn-lg btn-primary btn-block" type="submit">验证</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">验证礼券</button>
+        <a href="http://kd.dh.cx/2bd81" class="btn btn-lg btn-info btn-block">物流单号查询</a>
       </form>
+      <div class="kfpanel panel panel-default center-block">
+        <div class="panel-heading">客服电话:<a href="tel:13207674831">13207674831</a></div>
+        <div class="panel-body">
+            <img class="center-block"  src="{% static 'coupon/service_qr.png' %}" alt="微信二维码"></img>
+        </div>
+      </div>
 </div>
 
     
