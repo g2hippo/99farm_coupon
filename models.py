@@ -11,8 +11,8 @@ class Ticket(models.Model):
         return self.sn
     
     def generate_pwd():
-        seeds = "1234567890abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ"
-        return "".join(random.sample(seeds,8))
+        seeds = "1234567890abcdefghijkmnpqrstuvwxyz"
+        return "".join(random.sample(seeds,6))
     
     def generate_sn():
         try:
@@ -24,7 +24,7 @@ class Ticket(models.Model):
     batch = models.PositiveIntegerField(default = 18001)
     sn = models.CharField(max_length=8, default=generate_sn, primary_key=True)
     #sn.short_description = '序列号'
-    pwd = models.CharField(max_length=8,default=generate_pwd)
+    pwd = models.CharField(max_length=6,default=generate_pwd)
     product = models.PositiveSmallIntegerField(default = 1,choices =(
         (1,'玖玖红颜礼盒装900g'),
         (2,'玖玖红颜礼盒装1800g'),
