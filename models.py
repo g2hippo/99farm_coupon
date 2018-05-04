@@ -26,9 +26,8 @@ class Ticket(models.Model):
     #sn.short_description = '序列号'
     pwd = models.CharField(max_length=6,default=generate_pwd)
     product = models.PositiveSmallIntegerField(default = 1,choices =(
-        (1,'玖玖红颜礼盒装900g'),
-        (2,'玖玖红颜礼盒装1800g'),
-        (3,'玖玖红颜普通装1300g'),
+        (1,'碧桂园专供有机火龙果3斤'),
+        (2,'紫有20°有机火龙果3斤'),
         )
                                                )
     actived = models.BooleanField(default = False)
