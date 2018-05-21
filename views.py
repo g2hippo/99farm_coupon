@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from django.shortcuts import render,redirect
 from django.utils import timezone
-from .models import Ticket
+from .models import Ticket, Notice
 import datetime, json
 
 
@@ -32,10 +32,13 @@ def check(sn,pwd):
             msg = ticket.get_product_display()
     return verified,msg
 
+def get_notice():
+    return Notice.objects.last().text
+
 def index(request):
-    return render(request,'coupon/verify.html')
+    return render(request,'coupon/verify.html', {'error_message':get_notice()} )
 def indexsn(request,sn):
-    return render(request,'coupon/verify.html',{'sn':sn})
+    return render(request,'coupon/verify.html', {'sn':sn, 'error_message':get_notice()})
 
 def verify(request):
     

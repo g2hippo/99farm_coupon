@@ -4,8 +4,17 @@ from django.db import models
 import datetime,random
 from django.utils import timezone
 
-class Ticket(models.Model):
+class Notice(models.Model):
+    class Meta:
+        default_permissions = ('change')
+        verbose_name = '公告'
+        
+    text = models.CharField('公告内容' ,max_length = 60,blank=True)
+    create = models.DateField('创建日期' ,default=datetime.date.today)
 
+class Ticket(models.Model):
+    class Meta:
+        verbose_name = '礼券'
        
     def __str__(self):
         return self.sn

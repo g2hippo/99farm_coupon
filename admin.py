@@ -1,11 +1,16 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Ticket
+from .models import Ticket, Notice
 from import_export.admin import ImportExportActionModelAdmin, ImportExportModelAdmin
 from import_export import resources
 from import_export.fields import Field
 
+class NoticeAdmin(admin.ModelAdmin):
+    list_display = ['text', 'create']
+    list_editable = ['text']
+    list_display_links = None
+    
 
 def active_tickets(modeladmin, request, queryset):
     queryset.update(actived=True)
@@ -45,4 +50,5 @@ class TicketAdmin(ImportExportActionModelAdmin):
     actions = [active_tickets, deactive_tickets, complete_order]
     date_hierarchy = 'date_creat'
     
+admin.site.register(Notice, NoticeAdmin)
 admin.site.register(Ticket, TicketAdmin)
